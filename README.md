@@ -178,9 +178,9 @@ This project is licensed under the MIT License - see [LICENSE](LICENSE) file for
 **Sucheet Boppana**  
 Data Analyst | Healthcare Analytics
 
-- 💼 [LinkedIn](https://linkedin.com/in/yourprofile)
-- 📧 your.email@example.com
-- 🌐 [Portfolio](https://yourportfolio.com)
+- 💼 [LinkedIn](https://www.linkedin.com/in/saisucheetboppana/)
+- 📧 sucheet2000@gmail.com
+- 💻 [GitHub](https://github.com/sucheet2000)
 
 ---
 
