@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Data files (raw data is too large for GitHub)
+data/raw/*.csv
+data/raw/*.xlsx
+data/raw/*.zip
+
+# Keep processed data (smaller, analysis-ready)
+# Commented out to include in repo
+# data/processed/*.csv
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Environment
+.env
+
+# Internal guides (not for public GitHub)
+TABLEAU_GUIDE.md
+LINKEDIN_POST.md
