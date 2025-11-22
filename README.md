@@ -1,7 +1,8 @@
 # 🏥 Medical Desert & Health Equity Map - California
 
-> **"Your zip code determines your lifespan."**  
-> This project visualizes healthcare access disparities across California, with a focus on Santa Clara County.
+> **"Your zip code determines your lifespan."**
+
+An analysis of healthcare access disparities across California, examining the intersection of health outcomes and food access at the census tract level.
 
 [![Tableau Public](https://img.shields.io/badge/Tableau-Public-blue)](https://public.tableau.com)
 [![Python](https://img.shields.io/badge/Python-3.9+-green)](https://www.python.org)
@@ -11,187 +12,187 @@
 
 ## 📊 Project Overview
 
-This data analysis project explores the intersection of **health outcomes** and **food access** to identify "medical deserts" - areas with poor health outcomes and limited access to healthy food options.
+This project identifies "medical deserts" - geographic areas experiencing both poor health outcomes and limited access to healthy food. Using census tract-level data, I analyzed 9,070 California communities to uncover patterns in health equity.
 
-**Key Findings:**
-- 🎯 *[Your findings will go here after analysis]*
-- 📍 *[Santa Clara County specific insights]*
-- 🚨 *[High-risk areas identified]*
+### Key Findings
+
+- **374 high-risk census tracts** combine poor health outcomes (diabetes >15%) with food desert status
+- **6,013 tracts** show high disease prevalence despite adequate food access
+- **Santa Clara County**: 408 census tracts analyzed with localized risk assessment
+- **405 food deserts** identified statewide using USDA criteria
 
 ---
 
 ## 🗺️ Interactive Dashboard
 
 > [!IMPORTANT]
-> 🔗 **[View the Interactive Tableau Dashboard →](#)** *(Link will be added after publishing)*
+> 🔗 **[View Interactive Tableau Dashboard →](https://public.tableau.com/app/profile/sai.sucheet.boppana/viz/CaliforniaMedicalDeserts-HealthEquityAnalysis/Sheet1)**
 
-![Dashboard Preview](visualizations/dashboard_preview.png)
-*Preview of the split-screen correlation map showing diabetes prevalence vs. food access*
+*Interactive map showing 374 high-risk medical deserts across California's 9,070 census tracts*
 
 ---
 
 ## 📁 Data Sources
 
-### Primary Data
-| Source | Dataset | Granularity | Year |
-|--------|---------|-------------|------|
-| **CDC** | [PLACES 2024](https://data.cdc.gov/500-Cities-Places/PLACES-Census-Tract-Data-GIS-Friendly-Format-2024-/cwsq-ngmh) | Census Tract | 2024 |
-| **USDA** | [Food Access Research Atlas](https://www.ers.usda.gov/data-products/food-access-research-atlas/) | Census Tract | 2019 |
+| Source | Dataset | Granularity | Records |
+|--------|---------|-------------|---------|
+| **CDC PLACES** | [2024 Release](https://data.cdc.gov/500-Cities-Places/PLACES-Census-Tract-Data-GIS-Friendly-Format-2024-/cwsq-ngmh) | Census Tract | 362,792 CA records |
+| **USDA ERS** | [Food Access Research Atlas](https://www.ers.usda.gov/data-products/food-access-research-atlas/) | Census Tract | 8,024 CA records |
+| **NPPES** | NPI Registry (sample) | Provider Location | 200 providers |
 
-### Health Measures Analyzed
+### Health Metrics
 - Diabetes prevalence
-- Heart disease prevalence
+- Coronary heart disease
 - Obesity rates
 - High blood pressure
 - Lack of health insurance
 
-### Food Access Metrics
-- **LILA Tracts**: Low Income Low Access designation
-- **Distance thresholds**: 1 mile (urban) / 10 miles (rural)
-
----
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Python 3.9+
-- Tableau Public (free)
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/medical-desert-california.git
-cd medical-desert-california
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-### Run the Pipeline
-
-```bash
-# Step 1: Download data
-python scripts/download_data.py
-
-# Step 2: Process and merge data
-python scripts/process_data.py
-
-# Step 3: Open in Tableau Public
-# Load data/processed/california_health_equity.csv
-```
+### Food Access Definition
+**USDA Low Income Low Access (LILA) Criteria:**
+- **Urban**: >500 people or 33% of population >1 mile from supermarket
+- **Rural**: >500 people or 33% of population >10 miles from supermarket
 
 ---
 
 ## 🔬 Methodology
 
-### Healthcare Desert Risk Score
+### Composite Risk Score
 
-Our composite risk metric combines:
+I developed a healthcare desert risk score combining:
 
-1. **Health Outcome Score** (0-100)
-   - Average of diabetes, heart disease, obesity, hypertension, and uninsured rates
-   
-2. **Food Access Flag**
-   - USDA-defined Low Income Low Access (LILA) designation
+1. **Health Risk Score** (0-100 scale)
+   - Calculated as the mean of 5 key health indicators
+   - Threshold: >15% indicates high risk
+
+2. **Food Access Status**
+   - Binary classification using USDA LILA designation
 
 3. **Combined Risk Categories**
-   - 🔴 **High Risk: Desert + Disease** - Poor health + food desert
-   - 🟠 **High Risk: Disease Only** - Poor health, adequate food access
-   - 🟡 **Moderate Risk: Desert Only** - Good health, but food desert
-   - 🟢 **Low Risk** - Good health + adequate access
+   | Category | Criteria | Count |
+   |----------|----------|-------|
+   | 🔴 High Risk: Desert + Disease | Health score >15% AND food desert | 374 |
+   | 🟠 High Risk: Disease Only | Health score >15%, NOT food desert | 6,013 |
+   | 🟡 Moderate Risk: Desert Only | Health score ≤15% AND food desert | 31 |
+   | 🟢 Low Risk | Health score ≤15%, NOT food desert | 2,652 |
 
-### FIPS Code Joining
-All datasets joined on 11-digit Census Tract FIPS codes with proper zero-padding to ensure accurate geographic matching.
+### Data Processing
+- **Join method**: Left join on 11-digit Census Tract FIPS codes
+- **Missing data**: Food access nulls assumed non-desert status
+- **Validation**: Zero duplicate FIPS codes, 75% food access coverage
 
 ---
 
-## 📂 Project Structure
+## 🚀 Reproducibility
+
+### Setup
+
+```bash
+# Clone repository
+git clone https://github.com/yourusername/medical-desert-california.git
+cd medical-desert-california
+
+# Create virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### Run Pipeline
+
+```bash
+# Download datasets (CDC PLACES, USDA Food Access, NPPES)
+python scripts/download_data.py
+
+# Process and merge data
+python scripts/process_data.py
+
+# Output: data/processed/california_health_equity.csv (ready for Tableau)
+```
+
+---
+
+## 📂 Repository Structure
 
 ```
 medical-desert-california/
 ├── data/
-│   ├── raw/                          # Original downloads (gitignored)
-│   └── processed/                    # Clean CSVs for Tableau
-│       ├── california_health_equity.csv
-│       └── santa_clara_health_equity.csv
+│   ├── raw/                    # Source data (gitignored, 800+ MB)
+│   └── processed/              # Analysis-ready CSVs
+│       ├── california_health_equity.csv      (9,070 tracts)
+│       └── santa_clara_health_equity.csv     (408 tracts)
 ├── scripts/
-│   ├── download_data.py              # Automated data fetcher
-│   └── process_data.py               # ETL pipeline
-├── notebooks/
-│   └── exploratory_analysis.ipynb    # Jupyter analysis
-├── visualizations/                   # Screenshots & exports
+│   ├── download_data.py        # Automated data fetching
+│   └── process_data.py         # ETL pipeline with risk scoring
+├── DATA_DICTIONARY.md          # Complete column reference
 ├── README.md
-└── requirements.txt
+├── requirements.txt
+└── LICENSE
 ```
 
 ---
 
-## 📈 Key Insights
+## 🛠️ Technical Stack
 
-> [!NOTE]
-> *This section will be populated after completing the Tableau visualization*
-
-### Santa Clara County Highlights
-- Total census tracts analyzed: *[TBD]*
-- Food deserts identified: *[TBD]*
-- High-risk areas: *[TBD]*
-
----
-
-## 🛠️ Technologies Used
-
-- **Python** - Data processing and analysis
-  - pandas, numpy - Data manipulation
-  - requests - API calls
-  - openpyxl - Excel file handling
+- **Python 3.13** - Data engineering
+  - `pandas` - Data manipulation and merging
+  - `requests` - API integration
+  - `openpyxl` - Excel file processing
 - **Tableau Public** - Interactive visualization
-- **CDC PLACES API** - Health outcome data
-- **USDA Data** - Food access metrics
+- **Git** - Version control
 
 ---
 
-## 📝 Future Enhancements
+## 📊 Sample Insights
 
-- [ ] Add drive-time analysis to nearest hospital/clinic
-- [ ] Incorporate pharmacy location data
-- [ ] Time-series analysis of health trends
-- [ ] Predictive modeling for intervention targeting
+### Statewide Analysis
+- **9,070 census tracts** across California
+- **4.1% of tracts** are high-risk medical deserts
+- Clustering observed in Central Valley and rural counties
+
+### Santa Clara County
+- **408 census tracts** analyzed
+- Local risk distribution available in `santa_clara_health_equity.csv`
+- Suitable for targeted public health interventions
 
 ---
 
-## 🤝 Contributing
+## 📝 Next Steps
 
-This is a portfolio project, but I welcome feedback and suggestions!  
-Feel free to open an issue or reach out on [LinkedIn](#).
+- [ ] Publish interactive Tableau dashboard
+- [ ] Add drive-time analysis to healthcare facilities
+- [ ] Incorporate temporal trends (2015-2024 comparison)
+- [ ] Develop predictive model for intervention prioritization
 
 ---
 
 ## 📄 License
 
-MIT License - see [LICENSE](LICENSE) for details
+This project is licensed under the MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-## 👤 Author
+## 👤 Contact
 
-**[Your Name]**  
-Data Analyst | Healthcare Analytics Enthusiast
+**Sucheet Boppana**  
+Data Analyst | Healthcare Analytics
 
-- 📧 Email: your.email@example.com
-- 💼 LinkedIn: [your-profile](#)
-- 🌐 Portfolio: [your-website](#)
+- 💼 [LinkedIn](https://linkedin.com/in/yourprofile)
+- 📧 your.email@example.com
+- 🌐 [Portfolio](https://yourportfolio.com)
 
 ---
 
 ## 🙏 Acknowledgments
 
-- CDC PLACES team for maintaining exceptional public health data
-- USDA Economic Research Service for food access research
-- Tableau Public for free data visualization platform
+Data sources:
+- CDC PLACES Project (2024)
+- USDA Economic Research Service
+- CMS National Plan and Provider Enumeration System (NPPES)
 
 ---
 
 <div align="center">
-<sub>Built with ❤️ for improving healthcare equity</sub>
+<sub>Analyzing health equity through data</sub>
 </div>
