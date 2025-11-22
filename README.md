@@ -23,12 +23,12 @@ This project identifies "medical deserts" - geographic areas experiencing both p
 
 ---
 
-## 🗺️ Interactive Dashboard
+## 🗺️ Interactive Story
 
 > [!IMPORTANT]
-> 🔗 **[View Interactive Tableau Dashboard →](https://public.tableau.com/app/profile/sai.sucheet.boppana/viz/CaliforniaMedicalDeserts-HealthEquityAnalysis/Sheet1)**
+> 🔗 **[View Interactive Tableau Story →](https://public.tableau.com/app/profile/sai.sucheet.boppana/viz/CaliforniaMedicalDeserts-HealthEquityAnalysis/Story1)**
 
-*Interactive map showing 374 high-risk medical deserts across California's 9,070 census tracts*
+*Narrative presentation guiding you through the analysis of 374 high-risk medical deserts across California, from statewide patterns to county-level insights.*
 
 ---
 
